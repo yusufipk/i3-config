@@ -1,0 +1,363 @@
+# Mod4 =  Super key
+# Mod1 = Alt key
+
+#set Super key
+set $mod Mod4
+
+# Define the movements keys - variables
+set $up l
+set $down k
+set $left j
+set $right semicolon
+
+# Single and Dual screen 
+
+#exec --no-startup-id xrandr --output HDMI2 --right-of HDMI1 --auto
+
+set $firstMonitor HDMI-0
+set $secondMonitor DVI-D-0
+
+workspace 1 output $firstMonitor
+workspace 2 output $firstMonitor
+workspace 3 output $firstMonitor
+workspace 4 output $firstMonitor
+workspace 5 output $firstMonitor
+workspace 6 output $secondMonitor
+workspace 7 output $secondMonitor
+workspace 8 output $secondMonitor
+workspace 9 output $secondMonitor
+workspace 10 output $secondMonitor
+
+bindsym $mod+1 workspace 1
+bindsym $mod+2 workspace 2
+bindsym $mod+3 workspace 3
+bindsym $mod+4 workspace 4
+bindsym $mod+5 workspace 5
+bindsym $mod+6 workspace 6
+bindsym $mod+7 workspace 7
+bindsym $mod+8 workspace 8
+bindsym $mod+9 workspace 9
+bindsym $mod+0 workspace 10
+
+bindsym $mod+Shift+1 move container to workspace 1; workspace 1
+bindsym $mod+Shift+2 move container to workspace 2; workspace 2
+bindsym $mod+Shift+3 move container to workspace 3; workspace 3
+bindsym $mod+Shift+4 move container to workspace 4; workspace 4
+bindsym $mod+Shift+5 move container to workspace 5; workspace 5
+bindsym $mod+Shift+6 move container to workspace 6; workspace 6
+bindsym $mod+Shift+7 move container to workspace 7; workspace 7
+bindsym $mod+Shift+8 move container to workspace 8; workspace 8
+bindsym $mod+Shift+9 move container to workspace 9; workspace 9
+bindsym $mod+Shift+0 move container to workspace 10; workspace 10
+
+bindsym control+mod1+X mode "$mode_system"
+
+set $mode_system System (k) lock, (a) switch (l) logout, (u) suspend, (h) hibernate, (r) reboot, (s) shutdown
+mode "$mode_system" {
+    bindsym k exec --no-startup-id ~/.config/i3/scripts/i3exit.sh lock, mode "default"
+    bindsym a exec --no-startup-id ~/.config/i3/scripts/i3exit.sh switch, mode "default"
+    bindsym l exec --no-startup-id ~/.config/i3/scripts/i3exit.sh logout, mode "default"
+    bindsym u exec --no-startup-id ~/.config/i3/scripts/i3exit.sh suspend, mode "default"
+    bindsym h exec --no-startup-id ~/.config/i3/scripts/i3exit.sh hibernate, mode "default"
+    bindsym r exec --no-startup-id ~/.config/i3/scripts/i3exit.sh reboot, mode "default"
+    bindsym s exec --no-startup-id ~/.config/i3/scripts/i3exit.sh shutdown, mode "default"
+
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+
+bindsym $mod+Shift+r restart
+bindsym $mod+Shift+c reload
+bindsym $mod+Shift+q kill
+
+# Use Mouse+$mod to drag floating windows to their wanted position
+floating_modifier $mod
+
+# toggle tiling / floating
+bindsym $mod+Shift+space floating toggle
+bindsym $mod+Shift+s sticky toggle
+
+# change focus
+bindsym $mod+$left focus left
+bindsym $mod+$down focus down
+bindsym $mod+$up focus up
+bindsym $mod+$right focus right
+
+# alternatively, you can use the cursor keys:
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+# move focused window
+bindsym $mod+Shift+$left move left
+bindsym $mod+Shift+$down move down
+bindsym $mod+Shift+$up move up
+bindsym $mod+Shift+$right move right
+
+# alternatively, you can use the cursor keys:
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+#bindsym Mod1+Tab workspace next
+#bindsym Mod1+Shift+Tab workspace prev
+#bindsym $mod+Tab workspace back_and_forth
+
+#navigate workspaces next / previous
+bindsym Mod1+Ctrl+Right workspace next
+bindsym Mod1+Ctrl+Left workspace prev
+
+# switch to workspace with urgent window automatically
+for_window [urgent=latest] focus
+
+# orientation for new workspaces
+default_orientation horizontal
+
+# split in horizontal orientation
+bindsym $mod+h split v
+
+# split in vertical orientation
+bindsym $mod+g split v
+
+bindsym $mod+f fullscreen toggle
+
+bindsym $mod+s layout stacking
+bindsym $mod+z layout tabbed
+bindsym $mod+e layout toggle split
+
+# change focus between tiling / floating windows
+bindsym $mod+space focus mode_toggle
+
+# focus the parent container
+bindsym $mod+a focus parent
+
+# focus the child container
+#bindsym $mod+d focus child
+
+# Resizing by 1
+bindsym $mod+Mod1+Ctrl+Right resize shrink width 1 px or 1 ppt
+bindsym $mod+Mod1+Ctrl+Up resize grow height 1 px or 1 ppt
+bindsym $mod+Mod1+Ctrl+Down resize shrink height 1 px or 1 ppt
+bindsym $mod+Mod1+Ctrl+Left resize grow width 1 px or 1 ppt
+
+bindsym $mod+r mode "resize"
+
+mode "resize" {
+       bindsym Left        resize shrink width 10 px or 10 ppt
+       bindsym Down        resize grow height 10 px or 10 ppt
+       bindsym Up          resize shrink height 10 px or 10 ppt
+       bindsym Right       resize grow width 10 px or 10 ppt
+
+     bindsym Return mode "default"
+}
+
+font pango:Noto Mono Regular 13
+
+# Assign applications to workspaces
+# Workspace 1
+# Workspace 2 
+# Workspace 3
+assign [class="Olive|kdenlive"] → 3
+for_window [class="Olive|Kdenlive"] focus
+
+# Workspace 4 
+assign [class="Gimp"] → 4
+for_window [class="Gimp"] focus
+
+# Workspace 5 
+assign [class="^vlc$|Stremio|jellyfin|mpv"] → 5
+for_window [class="mpv|^vlc$|^Stremio$|Thunar|Jellyfin"] focus
+
+# Workspace 6 Video editor
+# Workspace 7 virtual machines and settings
+assign [class="^obs$"] → 7
+for_window [class="^obs$"] focus
+
+# Workspace 8
+# Workspace 9
+# Workspace 10
+
+# autostart 
+# USER APPLICATIONS TO START AT BOOT
+exec --no-startup-id easyeffects --gapplication-service
+exec --no-startup-id qbittorrent
+#exec --no-startup-id autokey-gtk
+exec --no-startup-id kdeconnect-indicator
+exec --no-startup-id /usr/lib/kdeconnectd
+exec --no-startup-id keepassxc
+exec --no-startup-id nitrogen --restore
+exec --no-startup-id blueman-applet
+exec --no-startup-id redshift -l 41.008240:28.978359
+
+# Autotiling
+exec_always --no-startup-id autotiling
+exec_always --no-startup-id mpris-proxy
+
+# Authentication dialog
+exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
+exec --no-startup-id /usr/libexec/polkit-gnome-authentication-agent-1 &
+
+# Network
+exec --no-startup-id nm-applet
+
+# num lock activated
+exec_always --no-startup-id numlockx on
+
+# clipman
+exec --no-startup-id xfce4-clipman
+
+#Polybar
+exec_always --no-startup-id ~/.config/polybar/launch.sh &
+
+# Utilities
+#exec_always --no-startup-id xset r rate 300 50
+exec setxkbmap -option caps:escape
+exec_always xset r rate 500 80
+exec xset r rate 500 80
+
+
+# System Applications
+exec --no-startup-id xfsettingsd
+exec --no-startup-id xfce4-power-manager &
+exec --no-startup-id /usr/lib/xfce4/notifyd/xfce4-notifyd &
+exec_always --no-startup-id picom --config ~/.config/i3/picom.conf
+bindsym control+mod1+o exec --no-startup-id ~/.config/i3/scripts/picom-toggle.sh
+
+
+# Applications keyboard shortcuts
+bindsym $mod+v exec xfce4-popup-clipman
+
+#ytfzf
+bindsym $mod+Control+q exec ytfzf -fD
+bindsym $mod+Control+w exec ytfzf -S -D -f
+
+# terminal
+bindsym $mod+Return exec konsole;focus
+
+bindsym $mod+Shift+Return exec thunar;focus
+bindsym $mod+shift+f exec rofi -show drun -show-icons
+bindsym $mod+shift+a exec -modi window -show window
+bindsym $mod+shift+d exec rofi -modi file-browser -show file-browser
+
+#System monitor
+bindsym control+Shift+Return exec --no-startup-id ksysguard;focus
+
+#settings
+bindsym control+mod1+m exec --no-startup-id xfce4-settings-manager
+
+#catfish
+bindsym control+mod1+c exec --no-startup-id catfish;focus
+
+#pavucontrol
+bindsym control+mod1+u exec --no-startup-id pavucontrol
+
+#xkill
+bindsym --release $mod+Escape exec xkill
+
+bindsym $mod+w exec --no-startup-id exo-open --launch webbrowser;focus
+
+#Screenshot
+bindsym $mod+shift+x exec spectacle -r
+
+#xcolor
+bindsym --release $mod+shift+w exec xcolor --selection
+
+#workspace 1 related
+#workspace 2 related
+#workspace 4 related
+#workspace 5 related
+#workspace 6 related
+#workspace 7 related
+#workspace 8 related
+#workspace 9 related
+#workspace 10 related
+
+# Make the currently focused window a scratchpad
+bindsym $mod+Shift+minus move scratchpad
+
+# Show the first scratchpad window
+bindsym $mod+minus scratchpad show
+
+#find class with
+bindsym --release $mod+Shift+u exec --no-startup-id notify-send "$(bash ~/.config/i3/scripts/get-classname.sh)"
+
+#Games
+for_window [class="Wine"] floating enable
+for_window [class="ChampR"] floating enable
+for_window [class="^Riot"] floating enable
+for_window [class="^League of Legends"] floating enable
+for_window [class="battle.net.exe"] floating enable
+for_window [class="Wine"] floating enable
+for_window [class="origin.exe"] floating enable
+for_window [class="Arena Tracker"] floating enable
+
+#Utilities
+for_window [class="Galculator"] floating enable
+for_window [class="Gnome-disks"] floating disable
+for_window [class="^Gnome-font-viewer$"] floating enable
+for_window [instance="gnome-calculator"] floating enable
+
+for_window [title="Copying"] floating enable
+for_window [title="Friends List"] floating enable
+for_window [title="Deleting"] floating enable
+for_window [title="Moving"] floating enable
+for_window [title="^Terminator Preferences$"] floating enable
+
+for_window [window_role="pop-up"] floating enable
+for_window [window_role="^Preferences$"] floating enable
+for_window [window_role="setup"] floating enable
+
+#colors
+# class                 border  backgr. text    indicator child_border                                                                     
+client.focused_inactive #4c7899 #285577 #ffffff #00000000 #00000000                                                                            
+client.unfocused        #333333 #5f676a #ffffff #00000000 #00000000                                                                            
+client.focused          #333333 #222222 #888888 #00000000 #00000000                                                                            
+client.background       #ffffff                                                           
+
+# Audio settings
+bindsym XF86AudioRaiseVolume exec pactl set-sink-volume 0 +5% #increase sound volume
+bindsym XF86AudioLowerVolume exec pactl set-sink-volume 0 -5% #decrease sound volume
+bindsym XF86AudioMute exec pactl set-sink-mute 0 toggle # mute sound
+
+#https://github.com/acrisci/playerctl/
+bindsym XF86AudioPlay exec --no-startup-id playerctl play-pause
+bindsym XF86AudioNext exec --no-startup-id playerctl next
+bindsym XF86AudioPrev exec --no-startup-id playerctl previous
+bindsym XF86AudioStop exec --no-startup-id playerctl stop
+
+#backlight
+bindsym XF86MonBrightnessUp exec --no-startup-id xbacklight -inc 10 # increase screen brightness
+bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -dec 10 # decrease screen brightness
+
+# bar toggle, hide or show
+bindsym $mod+b bar mode toggle
+
+# Border control
+hide_edge_borders both
+bindsym $mod+shift+b exec --no-startup-id i3-msg border toggle
+
+#super+t in arcolinux is starting terminal
+bindsym $mod+t border normal
+bindsym $mod+y border 1pixel
+bindsym $mod+u border none
+
+new_window normal
+new_float normal
+
+#Popups during fullscreen mode
+popup_during_fullscreen smart
+
+for_window [class="^.*"] border pixel 2
+gaps inner 5
+gaps outer 5
+smart_gaps on
+smart_borders on
+
+# The middle button toggles floating
+bindsym --whole-window $mod+button2 floating toggle
+
+bindsym --whole-window $mod+Shift+button1 move left
+bindsym --whole-window $mod+Shift+button3 move right
